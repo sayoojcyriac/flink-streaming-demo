@@ -73,3 +73,52 @@ https://github.com/sayoojcyriac/flink-streaming-demo/tree/main/src/main/java/com
   <li>The Predictor data model grows and learns as the new data arrives</li>
 </ol>
 
+## Building Module
+ mvn clean install
+ 
+## Running the data streaming system
+1. Create Kafka topic - streaming.words.source
+2. After running zookeeper and Kafka like mentioned in the above section, execute the below command to create the Kafka topic
+./bin/kafka-topics.sh \
+    --zookeeper localhost:2181 \
+    --create \
+    --topic streaming.words.source \
+    --partitions 1 \
+    --replication-factor 1
+ 3. Make sure the topic is created, run the below command to list the topics
+./bin/kafka-topics.sh --zookeeper localhost:2181 --list
+![image](https://user-images.githubusercontent.com/32276029/137755406-7fdc4cda-fcf6-4615-93f4-b34f8caac39a.png)
+
+4. Generate the fat Jar using maven command
+mvn clean install
+
+5. The application expects the data dump/ corpora in the designated directory, "data" at the root level of Jar
+6. Add the dump files in the "data" directory
+![image](https://user-images.githubusercontent.com/32276029/137756119-c4598a74-6f21-491a-9f1e-35267c269810.png)
+
+7. Run the Jar - 
+![image](https://user-images.githubusercontent.com/32276029/137756293-67003954-01aa-45fd-9d33-3ae6839f4317.png)
+
+![image](https://user-images.githubusercontent.com/32276029/137756425-d68f8c69-ae4c-4029-ae4b-5a46d8706369.png)
+
+## Results
+
+1. You may see in real-time the corpora data gets streamed word-by-word, send to Kafka topic
+2. The streamed words gets in to WordStreamProcessor DataStream
+3. WordStreamProcessor transoforms the data, prints and count
+
+![image](https://user-images.githubusercontent.com/32276029/137757356-a4a9a05b-63c6-4a1d-83d2-90c90393f176.png)
+4. The number next to the word is the count
+
+## Prediction
+
+1. WordStreamProcessor during tranformation, invokes the external WordPredictor service for insights
+2. The WordPredictor service logic is exmplained in the above section
+3. The WordPredictor service retruns upto 5 next possible strings based on the learned bi-grams derived from its occurrences
+![image](https://user-images.githubusercontent.com/32276029/137757870-3f39ce04-0f4e-418e-9319-0897b24755a9.png)
+
+
+
+
+
+
