@@ -1,0 +1,7 @@
+Apache Flink's dataflow programming model provides event-at-a-time processing on both finite and infinite datasets.
+At a basic level, Flink programs consist of streams and transformations.
+“Conceptually, a stream is a (potentially never-ending) flow of data records, and a transformation is an operation that takes one or more streams as input, and produces one or more output streams as a result.”[19]
+
+Apache Flink includes two core APIs: a DataStream API for bounded or unbounded streams of data and a DataSet API for bounded data sets.
+Flink also offers a Table API, which is a SQL-like expression language for relational stream and batch processing that can be easily embedded in Flink's DataStream and DataSet APIs.
+The highest-level language supported by Flink is SQL, which is semantically similar to the Table API and represents programs as SQL query expressions.
