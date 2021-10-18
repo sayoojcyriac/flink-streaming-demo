@@ -1,7 +1,15 @@
-Apache Flink's dataflow programming model provides event-at-a-time processing on both finite and infinite datasets.
-At a basic level, Flink programs consist of streams and transformations.
-“Conceptually, a stream is a (potentially never-ending) flow of data records, and a transformation is an operation that takes one or more streams as input, and produces one or more output streams as a result.”[19]
+Apache Flink's dataflow programming model provides event-at-a-time processing on both finite and infinite datasets. At a basic level, Flink programs consist of streams and transformations. “Conceptually, a stream is a (potentially never-ending) flow of data records, and a transformation is an operation that takes one or more streams as input, and produces one or more output streams as a result.”[19]
 
-Apache Flink includes two core APIs: a DataStream API for bounded or unbounded streams of data and a DataSet API for bounded data sets.
-Flink also offers a Table API, which is a SQL-like expression language for relational stream and batch processing that can be easily embedded in Flink's DataStream and DataSet APIs.
-The highest-level language supported by Flink is SQL, which is semantically similar to the Table API and represents programs as SQL query expressions.
+Apache Flink includes two core APIs: a DataStream API for bounded or unbounded streams of data and a DataSet API for bounded data sets. Flink also offers a Table API, which is a SQL-like expression language for relational stream and batch processing that can be easily embedded in Flink's DataStream and DataSet APIs. The highest-level language supported by Flink is SQL, which is semantically similar to the Table API and represents programs as SQL query expressions.
+
+Programming Model and Distributed Runtime
+Upon execution, Flink programs are mapped to streaming dataflows.[19] Every Flink dataflow starts with one or more sources (a data input, e.g., a message queue or a file system) and ends with one or more sinks (a data output, e.g., a message queue, file system, or database). An arbitrary number of transformations can be performed on the stream. These streams can be arranged as a directed, acyclic dataflow graph, allowing an application to branch and merge dataflows.
+
+Flink offers ready-built source and sink connectors with Apache Kafka, Amazon Kinesis, HDFS, Apache Cassandra, and more.[15]
+
+Flink programs run as a distributed system within a cluster and can be deployed in a standalone mode as well as on YARN, Mesos, Docker-based setups along with other resource management frameworks.[20]
+
+State: Checkpoints, Savepoints, and Fault-tolerance
+Apache Flink includes a lightweight fault tolerance mechanism based on distributed checkpoints.[9] A checkpoint is an automatic, asynchronous snapshot of the state of an application and the position in a source stream. In the case of a failure, a Flink program with checkpointing enabled will, upon recovery, resume processing from the last completed checkpoint, ensuring that Flink maintains exactly-once state semantics within an application. The checkpointing mechanism exposes hooks for application code to include external systems into the checkpointing mechanism as well (like opening and committing transactions with a database system).
+
+Flink also includes a mechanism called savepoints, which are manually-triggered checkpoints.[21] A user can generate a savepoint, stop a running Flink program, then resume the program from the same application state and position in the stream. Savepoints enable updates to a Flink program or a Flink cluster without losing the application's state . As of Flink 1.2, savepoints also allow to restart an application with a different parallelism—allowing users to adapt to changing workloads.
