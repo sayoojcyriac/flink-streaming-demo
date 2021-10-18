@@ -38,6 +38,7 @@ Kafka topic is used as the data stream source.
 </ol>
 
 ## Project Modules
+https://github.com/sayoojcyriac/flink-streaming-demo/tree/main/src/main/java/com/flink/demo
 ![image](https://user-images.githubusercontent.com/32276029/137683785-535fc608-b99a-4ad8-977e-ddf7dec89193.png)
 ### datasource - WordStreamProducer
 
@@ -57,5 +58,18 @@ Kafka topic is used as the data stream source.
   <li>Kafka topic data source has been specified [streaming.words.source] for the execution environment</li>
   <li>Hence the DataStream is initialized which shall go through different transformation and operations</li>
   <li>Establishes kafka connection, reads corpora data, stream the data word by word to Kafka topic in the loacl Kafka cluster </li>
+</ol>
+
+### predictor - WordPredictor
+<ol>
+  <li>External service word prediction pattern is implemented</li>
+  <li>WordPredictor service caches the bi-grams as the new word arrives</li>
+  <li>The service predicts upto 5 next possible words by counting the bi-gram and deriving the underlying probability / occurrences</li>
+  <li>Google Guava's Table API is used as this use case is similar to a map of maps</li>
+  <li>Key1 and Key2 forms a bi-gram pair and the third entry value tracks the number of occurrences in the Table</li>
+  <li>This is a very naive implementation of external prediction API as the model is cached in-memory</li>
+  <li>The implementation needs to be changed for unbounded data stream. But, this maybe good enough for demostration purpose and proving the concept</li>
+  <li>Hence during transformation of incoming data stream, the Predictor API is called with the input data & prints the predictions</li>
+  <li>The Predictor data model grows and learns as the new data arrives</li>
 </ol>
 
