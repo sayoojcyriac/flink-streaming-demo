@@ -36,3 +36,18 @@ Kafka topic is used as the data stream source.
   <li>Start kafka service - ./bin/kafka-server-start.sh ./config/server.properties > ./logs/start_kafka.log & </li>
   <li>Similar steps are described - https://dzone.com/articles/kafka-setup</li>
 </ol>
+
+## Project Modules
+![image](https://user-images.githubusercontent.com/32276029/137683785-535fc608-b99a-4ad8-977e-ddf7dec89193.png)
+### datasource - WordStreamProducer
+
+<ol>
+  <li>Implements the word streaming source </li>
+  <li>Requires a running instance of Kafka created with the topic - streaming.words.source </li>
+  <li>Establishes kafka connection, reads corpora data, stream the data word by word to Kafka topic in the loacl Kafka cluster </li>
+  <li>The Producer API from Kafka direct the token/ message to Kafka Server</li>
+  <li>The words are streamed from dump files in data directory at root level</li>
+  <li>Read dump files line by line, split to word tokens & then streamed word-by-word</li>
+  <li>The words are streamed by default with a delay of 1 second</li>
+</ol>
+
