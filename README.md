@@ -51,3 +51,11 @@ Kafka topic is used as the data stream source.
   <li>The words are streamed by default with a delay of 1 second</li>
 </ol>
 
+### processor - WordStreamProcessor
+<ol>
+  <li>Creates Flink StreamExecutionEnvironment - creates a local environment that will execute program on local machine</li>
+  <li>Kafka topic data source has been specified [streaming.words.source] for the execution environment</li>
+  <li>Hence the DataStream is initialized which shall go through different transformation and operations</li>
+  <li>Establishes kafka connection, reads corpora data, stream the data word by word to Kafka topic in the loacl Kafka cluster </li>
+</ol>
+
