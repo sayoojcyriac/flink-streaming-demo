@@ -4,7 +4,7 @@ This project is an introduction to Apache Flink DataStream APIs. Demonstrates a 
 <ul>
   <li>Stream words one by one from a dump</li>
   <li>Prints the count when the new word arrives</li>
-  <li>Prints out upto five most likely next words to be streamed by counting bi-grams and using then to derive probabilities</li>
+  <li>Predicts upto five most likely next words to be streamed by counting bi-grams occurrences and using them to derive probabilities</li>
 </ul>
 
 ## Prerequisites
@@ -14,17 +14,17 @@ The following prerequisities are required in order to build and run the services
   <li>Apache Flink</li>
   <li>Basic knowledge of Flink Streaming, DataStream API operations</li>
   <li>Apache Maven</li>
-  <li>Kafka topics as input data source</li>
-  <li>IDE for development, IntelliJ preferred</li>
+  <li>Basic knowledge of Kafka topics</li>
+  <li>IDE for development, IntelliJ is preferred</li>
 </ol>
 
 ## Insalling Flink 
 Please refer https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/try-flink/local_installation/ for installation steps. <br />
-The above steps install Flink, run Flink cluster in your local enviroment. <br />
+The above steps installs Flink, run Flink cluster in your local enviroment. <br />
 This project uses Apache Flink 1.9.1. So please make sure you install Flink 1.9.1 in order to run the code in this module smoothly.
 
 ## Kafka
-Kafka topic is used as the data stream source. 
+Kafka topic is used as the input data stream source. 
 <ol>
   <li>Download Kafka - http://kafka.apache.org/downloads </li>
   <li>Get Kafka version for Scala 2.12</li>
@@ -44,11 +44,11 @@ https://github.com/sayoojcyriac/flink-streaming-demo/tree/main/src/main/java/com
 
 <ol>
   <li>Implements the word streaming source </li>
-  <li>Requires a running instance of Kafka created with the topic - streaming.words.source </li>
-  <li>Establishes kafka connection, reads corpora data, stream the data word by word to Kafka topic in the loacl Kafka cluster </li>
+  <li>Requires a running instance of Kafka created with the topic - [streaming.words.source] </li>
+  <li>Establishes kafka connection, reads corpus data, streams data word by word to Kafka topic in the local Kafka cluster </li>
   <li>The Producer API from Kafka direct the token/ message to Kafka Server</li>
   <li>The words are streamed from dump files in data directory at root level</li>
-  <li>Read dump files line by line, split to word tokens & then streamed word-by-word</li>
+  <li>Read dump files line by line, split to word tokens & then stream word-by-word</li>
   <li>The words are streamed by default with a delay of 1 second</li>
 </ol>
 
@@ -57,7 +57,6 @@ https://github.com/sayoojcyriac/flink-streaming-demo/tree/main/src/main/java/com
   <li>Creates Flink StreamExecutionEnvironment - creates a local environment that will execute program on local machine</li>
   <li>Kafka topic data source has been specified [streaming.words.source] for the execution environment</li>
   <li>Hence the DataStream is initialized which shall go through different transformation and operations</li>
-  <li>Establishes kafka connection, reads corpora data, stream the data word by word to Kafka topic in the loacl Kafka cluster </li>
 </ol>
 
 ### predictor - WordPredictor
@@ -92,7 +91,7 @@ https://github.com/sayoojcyriac/flink-streaming-demo/tree/main/src/main/java/com
 4. Generate the fat Jar using maven command
 mvn clean install
 
-5. The application expects the data dump/ corpora in the designated directory, "data" at the root level of Jar
+5. The application expects the data dump in the designated directory, "data" at the root level of Jar
 6. Add the dump files in the "data" directory
 ![image](https://user-images.githubusercontent.com/32276029/137756119-c4598a74-6f21-491a-9f1e-35267c269810.png)
 
@@ -103,12 +102,12 @@ mvn clean install
 
 ## Results
 
-1. You may see in real-time the corpora data gets streamed word-by-word, send to Kafka topic
+1. You may see in real-time the data gets streamed word-by-word, send to Kafka topic
 2. The streamed words gets in to WordStreamProcessor DataStream
-3. WordStreamProcessor transoforms the data, prints and count
+3. WordStreamProcessor transforms the data, prints the count
 
 ![image](https://user-images.githubusercontent.com/32276029/137757356-a4a9a05b-63c6-4a1d-83d2-90c90393f176.png)
-4. The number next to the word is the count
+4. The number next to the word is its count
 
 ## Prediction
 
